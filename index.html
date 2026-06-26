@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -26,22 +27,24 @@
       overflow: auto;
       direction: ltr;
       overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
     }
 
-    img {
+    #landingImage {
       display: block;
       width: 100%;
       height: auto;
       max-width: none;
-      touch-action: manipulation;
       user-select: none;
       -webkit-user-drag: none;
+      touch-action: manipulation;
     }
 
-    img.zoomed {
+    #landingImage.zoomed {
       width: 200%;
     }
   </style>
+
 </head>
 
 <body>
@@ -62,37 +65,66 @@
     let lastTapTime = 0;
     let lastTouchZoomTime = 0;
 
-    function toggleZoom(clientX, clientY) {
-      if (!isZoomed) {
-        const rect = image.getBoundingClientRect();
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(value, max));
+    }
 
-        // מיקום הנגיעה בתוך התמונה המקורית
-        const originalX = clientX - rect.left + viewer.scrollLeft;
-        const originalY = clientY - rect.top + viewer.scrollTop;
+    function zoomAtPoint(clientX, clientY) {
+      const imageRect = image.getBoundingClientRect();
 
-        image.classList.add("zoomed");
-        isZoomed = true;
+      // מחשב את מיקום הלחיצה כאחוז מתוך התמונה
+      const xRatio = clamp(
+        (clientX - imageRect.left) / imageRect.width,
+        0,
+        1
+      );
 
+      const yRatio = clamp(
+        (clientY - imageRect.top) / imageRect.height,
+        0,
+        1
+      );
+
+      image.classList.add("zoomed");
+      isZoomed = true;
+
+      // נותן לדפדפן לעדכן קודם את גודל התמונה
+      requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          // אחרי ההגדלה: מרכזים את נקודת הנגיעה במסך
-          const zoomedX = originalX * zoomLevel;
-          const zoomedY = originalY * zoomLevel;
+          const targetLeft =
+            (image.offsetWidth * xRatio) - (viewer.clientWidth / 2);
+
+          const targetTop =
+            (image.offsetHeight * yRatio) - (viewer.clientHeight / 2);
+
+          const maxLeft = viewer.scrollWidth - viewer.clientWidth;
+          const maxTop = viewer.scrollHeight - viewer.clientHeight;
 
           viewer.scrollTo({
-            left: Math.max(0, zoomedX - viewer.clientWidth / 2),
-            top: Math.max(0, zoomedY - viewer.clientHeight / 2),
-            behavior: "smooth"
+            left: clamp(targetLeft, 0, maxLeft),
+            top: clamp(targetTop, 0, maxTop),
+            behavior: "auto"
           });
         });
-      } else {
-        image.classList.remove("zoomed");
-        isZoomed = false;
+      });
+    }
 
-        viewer.scrollTo({
-          left: 0,
-          top: 0,
-          behavior: "smooth"
-        });
+    function resetZoom() {
+      image.classList.remove("zoomed");
+      isZoomed = false;
+
+      viewer.scrollTo({
+        left: 0,
+        top: 0,
+        behavior: "auto"
+      });
+    }
+
+    function toggleZoom(clientX, clientY) {
+      if (isZoomed) {
+        resetZoom();
+      } else {
+        zoomAtPoint(clientX, clientY);
       }
     }
 
@@ -102,8 +134,9 @@
 
       if (now - lastTapTime < 300) {
         event.preventDefault();
-        lastTouchZoomTime = now;
+
         lastTapTime = 0;
+        lastTouchZoomTime = now;
 
         toggleZoom(touch.clientX, touch.clientY);
         return;
@@ -113,12 +146,14 @@
     }, { passive: false });
 
     image.addEventListener("dblclick", function (event) {
-      // מונע הפעלה כפולה במכשירי מגע
-      if (Date.now() - lastTouchZoomTime < 500) return;
+      if (Date.now() - lastTouchZoomTime < 500) {
+        return;
+      }
 
       event.preventDefault();
       toggleZoom(event.clientX, event.clientY);
     });
   </script>
+
 </body>
 </html>
