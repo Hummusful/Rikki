@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f8f5f0" />
   <title>ריקי פרחי | ארומתרפיה ופרחי באך</title>
 
   <style>
@@ -38,13 +38,14 @@
       user-select: none;
       -webkit-user-drag: none;
       touch-action: manipulation;
+      cursor: zoom-in;
     }
 
     #landingImage.zoomed {
       width: 200%;
+      cursor: zoom-out;
     }
   </style>
-
 </head>
 
 <body>
@@ -53,6 +54,9 @@
       id="landingImage"
       src="landing.png"
       alt="ריקי פרחי - ארומתרפיה ופרחי באך"
+      role="button"
+      tabindex="0"
+      aria-label="לחצו פעמיים להגדלה או להקטנה של תמונת דף הנחיתה"
     />
   </main>
 
@@ -60,7 +64,6 @@
     const viewer = document.getElementById("viewer");
     const image = document.getElementById("landingImage");
 
-    const zoomLevel = 2;
     let isZoomed = false;
     let lastTapTime = 0;
     let lastTouchZoomTime = 0;
@@ -72,7 +75,6 @@
     function zoomAtPoint(clientX, clientY) {
       const imageRect = image.getBoundingClientRect();
 
-      // מחשב את מיקום הלחיצה כאחוז מתוך התמונה
       const xRatio = clamp(
         (clientX - imageRect.left) / imageRect.width,
         0,
@@ -88,7 +90,6 @@
       image.classList.add("zoomed");
       isZoomed = true;
 
-      // נותן לדפדפן לעדכן קודם את גודל התמונה
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           const targetLeft =
@@ -128,16 +129,14 @@
       }
     }
 
-    image.addEventListener("touchend", function (event) {
+    image.addEventListener("touchend", (event) => {
       const now = Date.now();
       const touch = event.changedTouches[0];
 
       if (now - lastTapTime < 300) {
         event.preventDefault();
-
         lastTapTime = 0;
         lastTouchZoomTime = now;
-
         toggleZoom(touch.clientX, touch.clientY);
         return;
       }
@@ -145,7 +144,7 @@
       lastTapTime = now;
     }, { passive: false });
 
-    image.addEventListener("dblclick", function (event) {
+    image.addEventListener("dblclick", (event) => {
       if (Date.now() - lastTouchZoomTime < 500) {
         return;
       }
@@ -153,7 +152,21 @@
       event.preventDefault();
       toggleZoom(event.clientX, event.clientY);
     });
-  </script>
 
+    image.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+
+        if (isZoomed) {
+          resetZoom();
+        } else {
+          zoomAtPoint(
+            window.innerWidth / 2,
+            window.innerHeight / 2
+          );
+        }
+      }
+    });
+  </script>
 </body>
 </html>
