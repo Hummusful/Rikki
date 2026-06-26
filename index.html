@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#f8f5f0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; connect-src 'none'; media-src 'none'; font-src 'self';"
+  />
+
   <title>ריקי פרחי | ארומתרפיה ופרחי באך</title>
 
   <style>
@@ -19,6 +26,10 @@
       height: 100%;
       overflow: hidden;
       background: #f8f5f0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
     }
 
     #viewer {
@@ -39,28 +50,36 @@
       -webkit-user-drag: none;
       touch-action: manipulation;
       cursor: zoom-in;
+      outline: none;
     }
 
     #landingImage.zoomed {
       width: 200%;
       cursor: zoom-out;
     }
+
+    #landingImage:focus-visible {
+      outline: 3px solid #7a9b81;
+      outline-offset: -3px;
+    }
   </style>
 </head>
 
 <body>
-  <main id="viewer">
+  <main id="viewer" aria-label="דף נחיתה ריקי פרחי">
     <img
       id="landingImage"
       src="landing.png"
       alt="ריקי פרחי - ארומתרפיה ופרחי באך"
       role="button"
       tabindex="0"
-      aria-label="לחצו פעמיים להגדלה או להקטנה של תמונת דף הנחיתה"
+      aria-label="לחצו פעמיים להגדלה או הקטנה של התמונה"
     />
   </main>
 
   <script>
+    "use strict";
+
     const viewer = document.getElementById("viewer");
     const image = document.getElementById("landingImage");
 
@@ -88,6 +107,7 @@
       );
 
       image.classList.add("zoomed");
+      image.setAttribute("aria-pressed", "true");
       isZoomed = true;
 
       requestAnimationFrame(() => {
@@ -112,6 +132,7 @@
 
     function resetZoom() {
       image.classList.remove("zoomed");
+      image.setAttribute("aria-pressed", "false");
       isZoomed = false;
 
       viewer.scrollTo({
@@ -124,19 +145,26 @@
     function toggleZoom(clientX, clientY) {
       if (isZoomed) {
         resetZoom();
-      } else {
-        zoomAtPoint(clientX, clientY);
+        return;
       }
+
+      zoomAtPoint(clientX, clientY);
     }
 
     image.addEventListener("touchend", (event) => {
       const now = Date.now();
       const touch = event.changedTouches[0];
 
+      if (!touch) {
+        return;
+      }
+
       if (now - lastTapTime < 300) {
         event.preventDefault();
+
         lastTapTime = 0;
         lastTouchZoomTime = now;
+
         toggleZoom(touch.clientX, touch.clientY);
         return;
       }
@@ -154,19 +182,24 @@
     });
 
     image.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-
-        if (isZoomed) {
-          resetZoom();
-        } else {
-          zoomAtPoint(
-            window.innerWidth / 2,
-            window.innerHeight / 2
-          );
-        }
+      if (event.key !== "Enter" && event.key !== " ") {
+        return;
       }
+
+      event.preventDefault();
+
+      if (isZoomed) {
+        resetZoom();
+        return;
+      }
+
+      zoomAtPoint(
+        window.innerWidth / 2,
+        window.innerHeight / 2
+      );
     });
+
+    image.setAttribute("aria-pressed", "false");
   </script>
 </body>
 </html>
