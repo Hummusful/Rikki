@@ -16,7 +16,7 @@
     body {
       width: 100%;
       min-height: 100%;
-      overflow-x: hidden;
+      overflow-x: auto;
       background: #f8f5f0;
     }
 
@@ -24,11 +24,38 @@
       display: block;
       width: 100%;
       height: auto;
+      touch-action: manipulation;
+      transition: width 0.25s ease;
+    }
+
+    img.zoomed {
+      width: 200%;
+      max-width: none;
     }
   </style>
 </head>
 
 <body>
-  <img src="landing.png" alt="ריקי פרחי - ארומתרפיה ופרחי באך" />
+  <img id="landingImage" src="landing.png" alt="ריקי פרחי - ארומתרפיה ופרחי באך" />
+
+  <script>
+    const image = document.getElementById("landingImage");
+    let lastTap = 0;
+
+    image.addEventListener("touchend", function (event) {
+      const now = Date.now();
+
+      if (now - lastTap < 300) {
+        event.preventDefault();
+        image.classList.toggle("zoomed");
+      }
+
+      lastTap = now;
+    });
+
+    image.addEventListener("dblclick", function () {
+      image.classList.toggle("zoomed");
+    });
+  </script>
 </body>
 </html>
