@@ -42,21 +42,29 @@
     }
 
     #landingImage {
-      display: block;
-      width: 100%;
-      height: auto;
-      max-width: none;
-      user-select: none;
-      -webkit-user-drag: none;
-      touch-action: manipulation;
-      cursor: zoom-in;
-      outline: none;
-    }
+  display: block;
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  margin: 0 auto;
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: manipulation;
+  cursor: zoom-in;
+}
 
-    #landingImage.zoomed {
-      width: 200%;
-      cursor: zoom-out;
-    }
+#landingImage.zoomed {
+  width: 200%;
+  max-width: none;
+  margin: 0;
+  cursor: zoom-out;
+}
+
+@media (max-width: 768px) {
+  #landingImage {
+    max-width: none;
+  }
+}
 
     #landingImage:focus-visible {
       outline: 3px solid #7a9b81;
