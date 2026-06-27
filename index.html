@@ -16,15 +16,15 @@
   <style>
     :root {
       --page-bg: #f8f5f0;
-      --card-bg: rgba(255, 255, 255, 0.78);
-      --text-main: #455448;
-      --text-soft: #6e796f;
-      --green: #849d87;
-      --green-dark: #647a68;
+      --card-bg: rgba(255, 255, 255, 0.8);
+      --text-main: #465449;
+      --text-soft: #727b73;
+      --green: #7f9883;
+      --green-dark: #5f7663;
       --rose: #cf8d9b;
       --rose-dark: #b97585;
       --border: rgba(126, 151, 130, 0.2);
-      --shadow: 0 14px 34px rgba(84, 102, 86, 0.1);
+      --shadow: 0 12px 30px rgba(77, 95, 80, 0.1);
     }
 
     * {
@@ -41,26 +41,26 @@
       min-height: 100vh;
       background:
         radial-gradient(circle at top right, rgba(207, 141, 155, 0.11), transparent 28%),
-        radial-gradient(circle at top left, rgba(132, 157, 135, 0.14), transparent 30%),
+        radial-gradient(circle at top left, rgba(132, 157, 135, 0.13), transparent 30%),
         var(--page-bg);
       color: var(--text-main);
       font-family: Arial, "Segoe UI", sans-serif;
     }
 
     .page-shell {
-      width: min(1120px, calc(100% - 32px));
+      width: min(760px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 34px 0 54px;
+      padding: 30px 0 48px;
     }
 
     .hero {
       text-align: center;
-      margin-bottom: 34px;
+      margin-bottom: 26px;
     }
 
     .logo-wrap {
-      width: min(250px, 72vw);
-      margin: 0 auto 12px;
+      width: min(205px, 62vw);
+      margin: 0 auto 8px;
     }
 
     .logo-wrap img {
@@ -71,225 +71,236 @@
     }
 
     h1 {
-      font-size: clamp(1.75rem, 5vw, 2.55rem);
-      font-weight: 700;
-      line-height: 1.2;
       color: var(--green-dark);
-      margin-bottom: 8px;
+      font-size: clamp(1.7rem, 5vw, 2.3rem);
+      line-height: 1.2;
+      margin-bottom: 6px;
     }
 
     .subtitle {
       color: var(--text-soft);
-      font-size: clamp(1rem, 2.7vw, 1.14rem);
-      line-height: 1.6;
+      font-size: 1rem;
     }
 
-    .intro {
-      max-width: 590px;
-      margin: 16px auto 0;
-      color: #788078;
-      font-size: 0.95rem;
-      line-height: 1.7;
-    }
-
-    .links-grid {
+    .links-list {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
+      gap: 13px;
     }
 
     .link-card {
-      display: block;
-      overflow: hidden;
+      display: grid;
+      grid-template-columns: 118px minmax(0, 1fr);
+      gap: 15px;
+      align-items: center;
+
+      padding: 12px;
       border: 1px solid var(--border);
-      border-radius: 24px;
+      border-radius: 20px;
       background: var(--card-bg);
       box-shadow: var(--shadow);
-      color: inherit;
-      text-decoration: none;
-      transition:
-        transform 0.22s ease,
-        box-shadow 0.22s ease,
-        border-color 0.22s ease;
     }
 
-    .link-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(132, 157, 135, 0.42);
-      box-shadow: 0 20px 42px rgba(84, 102, 86, 0.16);
-    }
-
-    .link-card:focus-visible {
-      outline: 3px solid rgba(207, 141, 155, 0.42);
-      outline-offset: 4px;
-    }
-
-    .preview {
-      position: relative;
-      height: 215px;
+    .preview-link {
+      display: block;
+      width: 118px;
+      height: 88px;
       overflow: hidden;
+      border: 1px solid rgba(126, 151, 130, 0.18);
+      border-radius: 13px;
       background: #ebe8e1;
-      border-bottom: 1px solid rgba(126, 151, 130, 0.12);
     }
 
-    .preview img {
+    .preview-link img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: top center;
-      transition: transform 0.35s ease;
+      transition: transform 0.25s ease;
     }
 
-    .link-card:hover .preview img {
-      transform: scale(1.035);
+    .preview-link:hover img {
+      transform: scale(1.05);
     }
 
-    .preview-label {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.9);
+    .card-main {
+      min-width: 0;
+    }
+
+    .card-main h2 {
       color: var(--green-dark);
-      font-size: 0.75rem;
-      font-weight: 700;
-      box-shadow: 0 4px 12px rgba(62, 77, 65, 0.09);
+      font-size: 1rem;
+      line-height: 1.3;
+      margin-bottom: 4px;
     }
 
-    .card-content {
-      padding: 17px 18px 19px;
-    }
-
-    .card-content h2 {
-      color: var(--green-dark);
-      font-size: 1.15rem;
-      line-height: 1.35;
-      margin-bottom: 7px;
-    }
-
-    .card-content p {
+    .card-main p {
       color: var(--text-soft);
-      font-size: 0.9rem;
-      line-height: 1.55;
+      font-size: 0.86rem;
+      line-height: 1.45;
+      margin-bottom: 10px;
     }
 
-    .card-action {
-      display: inline-flex;
+    .link-tools {
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 7px;
-      margin-top: 13px;
-      color: var(--rose-dark);
-      font-size: 0.88rem;
-      font-weight: 700;
+      gap: 8px;
     }
 
-    .card-action::before {
-      content: "←";
-      font-size: 1.05rem;
-      line-height: 1;
+    .url-display {
+      direction: ltr;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      padding: 7px 9px;
+      border: 1px solid rgba(126, 151, 130, 0.16);
+      border-radius: 9px;
+      background: rgba(248, 245, 240, 0.85);
+
+      color: var(--green-dark);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.72rem;
+    }
+
+    .copy-link,
+    .open-link {
+      min-height: 33px;
+      padding: 7px 11px;
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .copy-link {
+      border: 1px solid rgba(126, 151, 130, 0.25);
+      background: #ffffff;
+      color: var(--green-dark);
+    }
+
+    .copy-link:hover {
+      background: #f2f7f1;
+    }
+
+    .open-link {
+      border: 1px solid var(--rose);
+      background: var(--rose);
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .open-link:hover {
+      background: var(--rose-dark);
+      border-color: var(--rose-dark);
     }
 
     .contact-card {
-      grid-column: 1 / -1;
-      border-color: rgba(207, 141, 155, 0.32);
+      border-color: rgba(207, 141, 155, 0.36);
     }
 
-    .contact-card .preview {
+    .contact-card .card-main h2 {
+      color: var(--rose-dark);
+    }
+
+    .contact-card .preview-link {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 190px;
+      padding: 10px;
       background:
-        radial-gradient(circle at 15% 20%, rgba(207, 141, 155, 0.17), transparent 28%),
-        radial-gradient(circle at 85% 82%, rgba(132, 157, 135, 0.18), transparent 34%),
+        radial-gradient(circle at 20% 20%, rgba(207, 141, 155, 0.2), transparent 42%),
+        radial-gradient(circle at 80% 80%, rgba(132, 157, 135, 0.2), transparent 45%),
         #f7f3ee;
     }
 
-    .contact-preview-inner {
-      width: min(390px, 78%);
-      display: flex;
-      align-items: center;
-      gap: 17px;
-      padding: 15px 18px;
-      border: 1px solid rgba(126, 151, 130, 0.16);
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.72);
-      box-shadow: 0 10px 22px rgba(84, 102, 86, 0.09);
-    }
-
-    .contact-preview-inner img {
-      width: 86px;
-      height: 86px;
+    .contact-card .preview-link img {
       object-fit: contain;
-      flex: 0 0 auto;
       mix-blend-mode: multiply;
     }
 
-    .contact-preview-text {
-      text-align: right;
+    .copy-toast {
+      position: fixed;
+      right: 50%;
+      bottom: 22px;
+      transform: translateX(50%) translateY(20px);
+      z-index: 100;
+
+      padding: 10px 15px;
+      border-radius: 999px;
+      background: #5f7663;
+      color: #ffffff;
+      font-size: 0.85rem;
+      box-shadow: 0 10px 24px rgba(57, 72, 60, 0.2);
+
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
-    .contact-preview-text strong {
-      display: block;
-      color: var(--green-dark);
-      font-size: 1rem;
-      margin-bottom: 5px;
-    }
-
-    .contact-preview-text span {
-      color: var(--text-soft);
-      font-size: 0.82rem;
-      line-height: 1.5;
-    }
-
-    .contact-card .card-content h2 {
-      color: var(--rose-dark);
-    }
-
-    .contact-card .card-action {
-      color: var(--rose-dark);
+    .copy-toast.show {
+      opacity: 1;
+      transform: translateX(50%) translateY(0);
     }
 
     .footer {
+      margin-top: 24px;
       text-align: center;
       color: #929892;
       font-size: 0.78rem;
-      margin-top: 28px;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 560px) {
       .page-shell {
-        width: min(100% - 24px, 560px);
-        padding-top: 24px;
+        width: min(100% - 20px, 560px);
+        padding-top: 22px;
       }
 
-      .hero {
-        margin-bottom: 24px;
+      .link-card {
+        grid-template-columns: 96px minmax(0, 1fr);
+        gap: 11px;
+        padding: 10px;
+        border-radius: 16px;
       }
 
-      .links-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
+      .preview-link {
+        width: 96px;
+        height: 76px;
+        border-radius: 11px;
       }
 
-      .preview {
-        height: 205px;
+      .card-main h2 {
+        font-size: 0.93rem;
       }
 
-      .contact-card {
-        grid-column: auto;
+      .card-main p {
+        font-size: 0.8rem;
+        margin-bottom: 8px;
+      }
+
+      .url-display {
+        width: 100%;
+        font-size: 0.66rem;
+      }
+
+      .copy-link,
+      .open-link {
+        font-size: 0.73rem;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .link-card,
-      .preview img {
+      .preview-link img,
+      .copy-toast {
         transition: none;
       }
     }
   </style>
+
+  <script src="./index.js" defer></script>
 </head>
 
 <body>
@@ -304,104 +315,182 @@
 
       <h1>ריקי פרחי</h1>
       <p class="subtitle">ארומתרפיה ופרחי באך</p>
-      <p class="intro">
-        מרחב נעים של הקשבה, רוגע והתאמה אישית.
-      </p>
     </header>
 
-    <section class="links-grid" aria-label="הקישורים של ריקי פרחי">
+    <section class="links-list" aria-label="קישורים">
 
-      <a class="link-card" href="https://1on1.kitzer.net/">
-        <div class="preview">
+      <article class="link-card">
+        <a
+          class="preview-link"
+          href="https://1on1.kitzer.net/"
+          aria-label="פתיחת דף פגישה אישית"
+        >
           <img
             src="/1on1/1on1.png"
             alt="תצוגה מקדימה של דף פגישה אישית"
-            loading="lazy"
           />
-          <span class="preview-label">פגישה אישית</span>
-        </div>
+        </a>
 
-        <div class="card-content">
-          <h2>ליווי אישי</h2>
-          <p>פגישה אישית המותאמת לצרכים, לקצב ולמקום שבו אתם נמצאים.</p>
-          <span class="card-action">לפרטים נוספים</span>
-        </div>
-      </a>
+        <div class="card-main">
+          <h2>פגישה אישית</h2>
+          <p>מרחב אישי של הקשבה והתאמה לצורך שלכם.</p>
 
-      <a class="link-card" href="https://workshop.kitzer.net/">
-        <div class="preview">
+          <div class="link-tools">
+            <span class="url-display">1on1.kitzer.net</span>
+
+            <button
+              class="copy-link"
+              type="button"
+              data-copy="https://1on1.kitzer.net/"
+            >
+              העתקה
+            </button>
+
+            <a class="open-link" href="https://1on1.kitzer.net/">
+              לפתיחה
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="link-card">
+        <a
+          class="preview-link"
+          href="https://workshop.kitzer.net/"
+          aria-label="פתיחת דף סדנאות"
+        >
           <img
             src="/workshop/workshop.png"
-            alt="תצוגה מקדימה של דף סדנת ארומתרפיה"
-            loading="lazy"
+            alt="תצוגה מקדימה של דף סדנאות"
           />
-          <span class="preview-label">סדנאות</span>
-        </div>
+        </a>
 
-        <div class="card-content">
+        <div class="card-main">
           <h2>סדנאות ארומתרפיה</h2>
-          <p>חוויה מעשית, נעימה ומלאת השראה דרך עולם הריחות והשמנים האתריים.</p>
-          <span class="card-action">לפרטים נוספים</span>
-        </div>
-      </a>
+          <p>חוויה מעשית דרך שמנים אתריים, ריחות ויצירה.</p>
 
-      <a class="link-card" href="https://lp1.kitzer.net/">
-        <div class="preview">
+          <div class="link-tools">
+            <span class="url-display">workshop.kitzer.net</span>
+
+            <button
+              class="copy-link"
+              type="button"
+              data-copy="https://workshop.kitzer.net/"
+            >
+              העתקה
+            </button>
+
+            <a class="open-link" href="https://workshop.kitzer.net/">
+              לפתיחה
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="link-card">
+        <a
+          class="preview-link"
+          href="https://lp1.kitzer.net/"
+          aria-label="פתיחת דף נחיתה 1"
+        >
           <img
             src="/lp1/lp1.png"
-            alt="תצוגה מקדימה של דף נחיתה"
-            loading="lazy"
+            alt="תצוגה מקדימה של דף נחיתה 1"
           />
-          <span class="preview-label">מידע נוסף</span>
-        </div>
+        </a>
 
-        <div class="card-content">
-          <h2>להכיר את הדרך</h2>
-          <p>מידע נוסף על התהליך, האפשרויות וההתאמה האישית לכל פנייה.</p>
-          <span class="card-action">לפרטים נוספים</span>
-        </div>
-      </a>
+        <div class="card-main">
+          <h2>דף מידע נוסף</h2>
+          <p>היכרות עם הדרך, הגישה והאפשרויות הקיימות.</p>
 
-      <a class="link-card" href="https://lp2.kitzer.net/">
-        <div class="preview">
+          <div class="link-tools">
+            <span class="url-display">lp1.kitzer.net</span>
+
+            <button
+              class="copy-link"
+              type="button"
+              data-copy="https://lp1.kitzer.net/"
+            >
+              העתקה
+            </button>
+
+            <a class="open-link" href="https://lp1.kitzer.net/">
+              לפתיחה
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="link-card">
+        <a
+          class="preview-link"
+          href="https://lp2.kitzer.net/"
+          aria-label="פתיחת דף נחיתה 2"
+        >
           <img
             src="/lp2/lp2.png"
-            alt="תצוגה מקדימה של דף נחיתה נוסף"
-            loading="lazy"
+            alt="תצוגה מקדימה של דף נחיתה 2"
           />
-          <span class="preview-label">עוד על ריקי</span>
-        </div>
+        </a>
 
-        <div class="card-content">
-          <h2>להאט, לנשום ולהתחבר</h2>
-          <p>עוד מידע על ריקי, הגישה שלה והאפשרות ליצור שינוי קטן ונעים ביום־יום.</p>
-          <span class="card-action">לפרטים נוספים</span>
-        </div>
-      </a>
+        <div class="card-main">
+          <h2>עוד על ריקי</h2>
+          <p>להאט, לנשום ולהתחבר מחדש לעצמכם.</p>
 
-      <a class="link-card contact-card" href="https://contact.kitzer.net/?source=direct">
-        <div class="preview">
-          <div class="contact-preview-inner">
-            <img
-              src="/contact/Rikkilogosm.jpg"
-              alt=""
-            />
+          <div class="link-tools">
+            <span class="url-display">lp2.kitzer.net</span>
 
-            <div class="contact-preview-text">
-              <strong>רוצים לדבר?</strong>
-              <span>השאירו פרטים וריקי תחזור אליכם בהקדם.</span>
-            </div>
+            <button
+              class="copy-link"
+              type="button"
+              data-copy="https://lp2.kitzer.net/"
+            >
+              העתקה
+            </button>
+
+            <a class="open-link" href="https://lp2.kitzer.net/">
+              לפתיחה
+            </a>
           </div>
-
-          <span class="preview-label">יצירת קשר</span>
         </div>
+      </article>
 
-        <div class="card-content">
-          <h2>השאירו פרטים</h2>
-          <p>לשאלות, התאמה אישית, פגישה או סדנה — כל הפניות מגיעות ישירות לריקי.</p>
-          <span class="card-action">ליצירת קשר</span>
+      <article class="link-card contact-card">
+        <a
+          class="preview-link"
+          href="https://contact.kitzer.net/?source=direct"
+          aria-label="פתיחת דף יצירת קשר"
+        >
+          <img
+            src="/contact/Rikkilogosm.jpg"
+            alt="הלוגו של ריקי פרחי"
+          />
+        </a>
+
+        <div class="card-main">
+          <h2>יצירת קשר</h2>
+          <p>לשאלות, התאמה אישית, פגישה או סדנה.</p>
+
+          <div class="link-tools">
+            <span class="url-display">contact.kitzer.net</span>
+
+            <button
+              class="copy-link"
+              type="button"
+              data-copy="https://contact.kitzer.net/?source=direct"
+            >
+              העתקה
+            </button>
+
+            <a
+              class="open-link"
+              href="https://contact.kitzer.net/?source=direct"
+            >
+              לפתיחה
+            </a>
+          </div>
         </div>
-      </a>
+      </article>
 
     </section>
 
@@ -409,5 +498,14 @@
       ריקי פרחי · ארומתרפיה ופרחי באך
     </footer>
   </main>
+
+  <div
+    id="copyToast"
+    class="copy-toast"
+    role="status"
+    aria-live="polite"
+  >
+    הקישור הועתק
+  </div>
 </body>
 </html>
