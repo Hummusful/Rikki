@@ -4,9 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f8f5f0" />
-    <meta name="description" content="השאירי פרטים ואחזור אליכם בהקדם." />
+    <meta
+      name="description"
+      content="השאירו פרטים וריקי פרחי תחזור אליכם בהקדם."
+    />
 
     <title>יצירת קשר | ריקי פרחי</title>
+
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+      async
+      defer
+    ></script>
 
     <style>
       :root {
@@ -55,7 +64,10 @@
         inset: 0;
         z-index: -2;
         background:
-          linear-gradient(rgba(248, 245, 240, 0.9), rgba(248, 245, 240, 0.94)),
+          linear-gradient(
+            rgba(248, 245, 240, 0.9),
+            rgba(248, 245, 240, 0.94)
+          ),
           url("Rikkilogosm.jpg") center / min(760px, 85vw) no-repeat;
       }
 
@@ -159,6 +171,12 @@
         color: #a64e4e;
       }
 
+      .turnstile-wrapper {
+        display: flex;
+        justify-content: center;
+        min-height: 65px;
+      }
+
       .submit-button {
         width: 100%;
         border: 0;
@@ -236,7 +254,7 @@
           <h1 id="pageTitle">בואו נדבר</h1>
 
           <p>
-            השאירו פרטים ואחזור אליכם בהקדם,
+            השאירו פרטים וריקי תחזור אליכם בהקדם,
             <br />
             כדי להבין מה הכי נכון ומתאים עבורכם.
           </p>
@@ -260,7 +278,9 @@
           </div>
 
           <div class="field">
-            <label for="phone"> טלפון <span class="required">*</span> </label>
+            <label for="phone">
+              טלפון <span class="required">*</span>
+            </label>
 
             <input
               id="phone"
@@ -293,13 +313,18 @@
               placeholder="אפשר לכתוב כאן כמה מילים..."
             ></textarea>
           </div>
-          <div
-            class="cf-turnstile"
-            data-sitekey="0x4AAAAAADr-ZVmFzkSSN1Q5"
-            data-theme="light"
-          ></div>
 
-          <button class="submit-button" type="submit">שלחו פרטים</button>
+          <div class="turnstile-wrapper">
+            <div
+              class="cf-turnstile"
+              data-sitekey="0x4AAAAAADr-ZVmFzkSSN1Q5"
+              data-theme="light"
+            ></div>
+          </div>
+
+          <button class="submit-button" type="submit">
+            שלחו פרטים
+          </button>
 
           <p
             id="formStatus"
@@ -341,7 +366,8 @@
         event.preventDefault();
 
         if (!form.checkValidity()) {
-          formStatus.textContent = "נא למלא שם וטלפון לפני שליחת הפרטים.";
+          formStatus.textContent =
+            "נא למלא שם וטלפון לפני שליחת הפרטים.";
           formStatus.className = "status-message error";
           form.reportValidity();
           return;
@@ -351,9 +377,11 @@
         formStatus.className = "status-message";
 
         /*
-        בשלב הבא נחבר כאן את Cloudflare Turnstile
-        ואת Cloudflare Worker ששולח את הפרטים ל-Google Sheets.
-      */
+          בשלב הבא נחבר כאן:
+          1. אימות Turnstile
+          2. Cloudflare Worker
+          3. שליחה מאובטחת ל-Google Sheets
+        */
       });
     </script>
   </body>
