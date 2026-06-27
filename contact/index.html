@@ -334,9 +334,17 @@
     const params = new URLSearchParams(window.location.search);
     const source = params.get("source");
 
-    if (source) {
-      sourceInput.value = source.trim().slice(0, 100);
-    }
+    const allowedSources = new Set([
+  "direct",
+  "1on1",
+  "workshop",
+  "lp1",
+  "lp2"
+]);
+
+if (source && allowedSources.has(source)) {
+  sourceInput.value = source;
+}
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
