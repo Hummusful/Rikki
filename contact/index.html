@@ -347,6 +347,8 @@
       const sourceInput = document.getElementById("source");
       const formStatus = document.getElementById("formStatus");
 
+      const WORKER_URL = "https://rikki-contact-api.dustrial.workers.dev/";
+
       const params = new URLSearchParams(window.location.search);
       const source = params.get("source");
 
@@ -362,16 +364,56 @@
         sourceInput.value = source;
       }
 
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
+      form.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-        if (!form.checkValidity()) {
-          formStatus.textContent =
-            "נא למלא שם וטלפון לפני שליחת הפרטים.";
-          formStatus.className = "status-message error";
-          form.reportValidity();
-          return;
-        }
+  if (!form.checkValidity()) {
+    formStatus.textContent = "נא למלא שם וטלפון לפני שליחת הפרטים.";
+    formStatus.className = "status-message error";
+    form.reportValidity();
+    return;
+  }
+
+  const submitButton = form.querySelector(".submit-button");
+  const formData = new FormData(form);
+
+  const payload = {
+    fullName: formData.get("fullName")?.trim(),
+    phone: formData.get("phone")?.trim(),
+    email: formData.get("email")?.trim(),
+    message: formData.get("message")?.trim(),
+    source: formData.get("source"),
+    turnstileToken: formData.get("cf-turnstile-response"),
+  };
+
+  submitButton.disabled = true;
+  submitButton.textContent = "שולח פרטים...";
+
+  try {
+    const response = await fetch(WORKER_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+
+    formStatus.textContent =
+      "הפרטים נשלחו בהצלחה. ריקי תחזור אליכם בהקדם.";
+    formStatus.className = "status-message success";
+  } catch {
+    formStatus.textContent =
+      "לא הצלחנו לשלוח כרגע. נסו שוב בעוד רגע.";
+    formStatus.className = "status-message error";
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "שלחו פרטים";
+  }
+});
 
         formStatus.textContent = "";
         formStatus.className = "status-message";
