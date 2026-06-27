@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f8f5f0" />
+  <meta
+    name="description"
+    content="השאירי פרטים וריקי פרחי תחזור אלייך בהקדם."
+  />
+
+  <title>יצירת קשר | ריקי פרחי</title>
+
+  <style>
+    :root {
+      --background: #f8f5f0;
+      --card: rgba(255, 255, 255, 0.88);
+      --text: #3f4b43;
+      --muted: #6d786f;
+      --accent: #7f9b7d;
+      --accent-hover: #688565;
+      --border: #dce4da;
+      --focus: #577352;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      background: var(--background);
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      font-family: Arial, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .page::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(
+          rgba(248, 245, 240, 0.9),
+          rgba(248, 245, 240, 0.94)
+        ),
+        url("Rikkilogosm.jpg") center / min(760px, 85vw) no-repeat;
+    }
+
+    .page::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        radial-gradient(
+          circle at top right,
+          rgba(160, 190, 157, 0.2),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at bottom left,
+          rgba(225, 186, 187, 0.18),
+          transparent 32%
+        );
+      pointer-events: none;
+    }
+
+    .contact-card {
+      width: min(100%, 560px);
+      padding: clamp(26px, 5vw, 44px);
+      border: 1px solid rgba(220, 228, 218, 0.9);
+      border-radius: 28px;
+      background: var(--card);
+      box-shadow: 0 18px 50px rgba(67, 87, 71, 0.12);
+      backdrop-filter: blur(8px);
+    }
+
+    .brand {
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .brand img {
+      width: 84px;
+      height: 84px;
+      object-fit: contain;
+    }
+
+    .brand h1 {
+      font-size: clamp(1.7rem, 4vw, 2.25rem);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .brand p {
+      max-width: 400px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    form {
+      display: grid;
+      gap: 17px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 0.96rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 13px 14px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.92);
+      font: inherit;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    textarea {
+      min-height: 128px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--focus);
+      box-shadow: 0 0 0 4px rgba(87, 115, 82, 0.14);
+    }
+
+    .required {
+      color: #a64e4e;
+    }
+
+    .submit-button {
+      width: 100%;
+      border: 0;
+      border-radius: 13px;
+      padding: 14px 18px;
+      color: #fff;
+      background: var(--accent);
+      cursor: pointer;
+      font: inherit;
+      font-size: 1.05rem;
+      font-weight: 700;
+      transition: background 0.18s ease, transform 0.18s ease;
+    }
+
+    .submit-button:hover {
+      background: var(--accent-hover);
+    }
+
+    .submit-button:active {
+      transform: translateY(1px);
+    }
+
+    .submit-button:focus-visible {
+      outline: 3px solid rgba(87, 115, 82, 0.35);
+      outline-offset: 3px;
+    }
+
+    .privacy-note {
+      margin-top: 18px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.82rem;
+    }
+
+    .status-message {
+      display: none;
+      margin-top: 4px;
+      border-radius: 11px;
+      padding: 11px 13px;
+      font-size: 0.92rem;
+    }
+
+    .status-message.error {
+      display: block;
+      color: #8a3434;
+      background: #fff0f0;
+      border: 1px solid #f0caca;
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        padding: 18px 14px;
+      }
+
+      .contact-card {
+        border-radius: 22px;
+      }
+
+      .brand img {
+        width: 70px;
+        height: 70px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="contact-card" aria-labelledby="pageTitle">
+      <header class="brand">
+        <img
+          src="Rikkilogosm.jpg"
+          alt="הלוגו של ריקי פרחי"
+        />
+
+        <h1 id="pageTitle">בוא נדבר</h1>
+
+        <p>
+          השאירי פרטים ואחזור אלייך בהקדם,
+          <br />
+          כדי להבין מה הכי נכון ומתאים עבורך.
+        </p>
+      </header>
+
+      <form id="contactForm" novalidate>
+        <input
+          type="hidden"
+          id="source"
+          name="source"
+          value="direct"
+        />
+
+        <div class="field">
+          <label for="fullName">
+            שם מלא <span class="required">*</span>
+          </label>
+
+          <input
+            id="fullName"
+            name="fullName"
+            type="text"
+            autocomplete="name"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label for="phone">
+            טלפון <span class="required">*</span>
+          </label>
+
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            inputmode="tel"
+            autocomplete="tel"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label for="email">אימייל</label>
+
+          <input
+            id="email"
+            name="email"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+          />
+        </div>
+
+        <div class="field">
+          <label for="message">איך אפשר לעזור?</label>
+
+          <textarea
+            id="message"
+            name="message"
+            placeholder="אפשר לכתוב כאן כמה מילים..."
+          ></textarea>
+        </div>
+
+        <button class="submit-button" type="submit">
+          שלחי פרטים
+        </button>
+
+        <p
+          id="formStatus"
+          class="status-message"
+          role="status"
+          aria-live="polite"
+        ></p>
+      </form>
+
+      <p class="privacy-note">
+        הפרטים נשלחים רק לצורך יצירת קשר ולא יועברו לגורם אחר.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    const form = document.getElementById("contactForm");
+    const sourceInput = document.getElementById("source");
+    const formStatus = document.getElementById("formStatus");
+
+    const params = new URLSearchParams(window.location.search);
+    const source = params.get("source");
+
+    if (source) {
+      sourceInput.value = source.trim().slice(0, 100);
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        formStatus.textContent = "נא למלא שם וטלפון לפני שליחת הפרטים.";
+        formStatus.className = "status-message error";
+        form.reportValidity();
+        return;
+      }
+
+      formStatus.textContent = "";
+      formStatus.className = "status-message";
+
+      /*
+        בשלב הבא נחבר כאן את Cloudflare Turnstile
+        ואת Cloudflare Worker ששולח את הפרטים ל-Google Sheets.
+      */
+    });
+  </script>
+</body>
+</html>
