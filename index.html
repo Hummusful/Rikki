@@ -166,6 +166,7 @@
     }
 
     .copy-link,
+    .share-link,
     .open-link {
       min-height: 33px;
       padding: 7px 11px;
@@ -176,7 +177,8 @@
       cursor: pointer;
     }
 
-    .copy-link {
+    .copy-link,
+    .share-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -188,7 +190,14 @@
       color: var(--green-dark);
     }
 
-    .copy-link svg {
+    .share-link {
+      border-color: rgba(126, 151, 130, 0.32);
+      background: var(--green);
+      color: #ffffff;
+    }
+
+    .copy-link svg,
+    .share-link svg {
       width: 17px;
       height: 17px;
       stroke: currentColor;
@@ -196,6 +205,11 @@
 
     .copy-link:hover {
       background: #f2f7f1;
+    }
+
+    .share-link:hover {
+      background: var(--green-dark);
+      border-color: var(--green-dark);
     }
 
     .open-link {
@@ -299,6 +313,7 @@
       }
 
       .copy-link,
+      .share-link,
       .open-link {
         font-size: 0.73rem;
       }
@@ -370,6 +385,30 @@
               </svg>
             </button>
 
+            <button
+              class="share-link"
+              type="button"
+              data-share="https://1on1.kitzer.net/"
+              data-title="פגישה אישית"
+              aria-label="שיתוף הקישור"
+              title="שיתוף הקישור"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <path d="m8.6 13.5 6.8 4" />
+                <path d="m15.4 6.5-6.8 4" />
+              </svg>
+            </button>
+
             <a class="open-link" href="https://1on1.kitzer.net/">
               לפתיחה
             </a>
@@ -413,6 +452,30 @@
               >
                 <rect x="9" y="9" width="11" height="11" rx="2" />
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+            </button>
+
+            <button
+              class="share-link"
+              type="button"
+              data-share="https://workshop.kitzer.net/"
+              data-title="סדנאות ארומתרפיה"
+              aria-label="שיתוף הקישור"
+              title="שיתוף הקישור"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <path d="m8.6 13.5 6.8 4" />
+                <path d="m15.4 6.5-6.8 4" />
               </svg>
             </button>
 
@@ -462,6 +525,30 @@
               </svg>
             </button>
 
+            <button
+              class="share-link"
+              type="button"
+              data-share="https://lp1.kitzer.net/"
+              data-title="דף מידע נוסף"
+              aria-label="שיתוף הקישור"
+              title="שיתוף הקישור"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <path d="m8.6 13.5 6.8 4" />
+                <path d="m15.4 6.5-6.8 4" />
+              </svg>
+            </button>
+
             <a class="open-link" href="https://lp1.kitzer.net/">
               לפתיחה
             </a>
@@ -508,6 +595,30 @@
               </svg>
             </button>
 
+            <button
+              class="share-link"
+              type="button"
+              data-share="https://lp2.kitzer.net/"
+              data-title="עוד על ריקי"
+              aria-label="שיתוף הקישור"
+              title="שיתוף הקישור"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <path d="m8.6 13.5 6.8 4" />
+                <path d="m15.4 6.5-6.8 4" />
+              </svg>
+            </button>
+
             <a class="open-link" href="https://lp2.kitzer.net/">
               לפתיחה
             </a>
@@ -551,6 +662,30 @@
               >
                 <rect x="9" y="9" width="11" height="11" rx="2" />
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+            </button>
+
+            <button
+              class="share-link"
+              type="button"
+              data-share="https://contact.kitzer.net/?source=direct"
+              data-title="יצירת קשר"
+              aria-label="שיתוף הקישור"
+              title="שיתוף הקישור"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <path d="m8.6 13.5 6.8 4" />
+                <path d="m15.4 6.5-6.8 4" />
               </svg>
             </button>
 
