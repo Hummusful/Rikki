@@ -70,6 +70,94 @@
       outline: 3px solid #7a9b81;
       outline-offset: -3px;
     }
+
+       /* Floating CTA – mobile only */
+.floating-cta {
+  position: fixed;
+  left: 50%;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(360px, calc(100% - 28px));
+  min-height: 52px;
+  padding: 14px 22px;
+
+  border-radius: 999px;
+  background: #cf8d9b;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+
+  box-shadow:
+    0 10px 24px rgba(117, 71, 79, 0.22),
+    0 4px 10px rgba(117, 71, 79, 0.14);
+
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+
+  animation: none;
+}
+
+.floating-cta::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -70%;
+  width: 45%;
+  height: 100%;
+
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+
+  transform: skewX(-18deg);
+  animation: cta-glow 4.5s ease-in-out infinite;
+}
+
+.floating-cta:hover {
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.floating-cta:active {
+  transform: translateX(-50%) scale(0.98);
+}
+
+@keyframes cta-glow {
+  0%,
+  65% {
+    right: -70%;
+  }
+
+  100% {
+    right: 135%;
+  }
+}
+
+/* בדסקטופ לא מציגים אותו כרגע */
+@media (min-width: 769px) {
+  .floating-cta {
+    display: none;
+  }
+}
+
+/* למי שמעדיף פחות אנימציות */
+@media (prefers-reduced-motion: reduce) {
+  .floating-cta,
+  .floating-cta::after {
+    animation: none;
+  }
+}
   </style>
 </head>
 <body>
@@ -209,5 +297,8 @@
 
     image.setAttribute("aria-pressed", "false");
   </script>
+  <a class="floating-cta" href="/contact/?source=workshop">
+  השאירו פרטים
+</a>
 </body>
 </html>
